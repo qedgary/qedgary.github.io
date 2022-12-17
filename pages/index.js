@@ -1,92 +1,66 @@
+import Image from 'next/image';
 import Head from 'next/head'
 import styles from '../styles/Home.module.css';
+
+// native dimensions of profile picture
+const pfpHeight_n = 1104;
+const pfpWidth_n  = 891;
+// define the pixel offsets of profile pic relative to bottom blue border
+const pfpOffset_lf = 13; // leftwards
+const pfpOffset_up = 95; // upwards
+
+var pfpScale = 0.4;
+
+var profilePicHeight = pfpScale * pfpHeight_n;
+var profilePicWidth  = pfpScale * pfpWidth_n;
+
+
 
 export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Gary Zhang:  physicist, linguist, graphic designer</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
+      <header>
+        <div className={styles.headerDesign}>
+          <div
+            className={styles.headerTextWrapper}
+            style={{width: `calc(100% - ${profilePicWidth}px - ${pfpOffset_lf}px)`}}
           >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
+            <h1 className={styles.headerText} >Gary Zhang</h1>
             <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
+              A person trying to figure out how the world works, and how people think the world works.
             </p>
-          </a>
+          </div>
+          <div
+            style={{
+              height: profilePicHeight - pfpScale * pfpOffset_up,
+              width: profilePicWidth + pfpOffset_lf,
+              userSelect: "none",
+              position: "absolute",
+              bottom: 0,
+              right: 0
+            }}
+          >
+            <Image src="/profile.png"
+              height={profilePicHeight}
+              width={profilePicWidth}
+              alt="Photograph of Gary Zhang"
+              draggable="false"
+              priority
+            />
+          </div>
         </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
-        </a>
-      </footer>
+      </header>
 
       <style jsx>{`
         main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
+          padding: 5em 0;
           justify-content: center;
           align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: inherit;
-        }
         code {
           background: #fafafa;
           border-radius: 5px;
@@ -96,18 +70,14 @@ export default function Home() {
             DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
         }
       `}</style>
-
+      {/* delete this later when you create the global.css file */}
       <style jsx global>{`
         html,
         body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
+          font-size: 20pt;
+          font-weight: 300;
+          font-family: "Open Sans";
+          margin: 0 8px 0 8px;
         }
       `}</style>
     </div>
