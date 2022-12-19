@@ -1,12 +1,9 @@
-/* My stuff ---------------------------------- */
-
 .headerDesign {
-  /*max-width: 800px;*/
   width: 100%;
   border-bottom: 8pt solid #0066FF;
   display: inline-block;
   position: relative;
-  height: calc(100vh - 32pt);
+  height: calc(99vh - 32pt);
 }
 
 .headerText {
@@ -20,11 +17,24 @@
   float: left;
   position: absolute;
   bottom: 0;
+  font-size: 20pt;
 }
-/* ------------------------- Included stuff -------------------------*/
 
 .container {
   min-height: 100vh;
   padding: 0 0.7rem;
   justify-content: center;
+}
+
+.profilePhotoWrapper {
+    user-select: none;
+    position: absolute;
+    bottom: 0;
+    right: 0
+}
+
+@media only screen and (max-width: 750px) {
+  .profilePhotoWrapper {
+    display: none;
+  }
 }

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Head from 'next/head'
 import styles from '../styles/Home.module.css';
+import {useState, useEffect} from 'react';
 
 // native dimensions of profile picture
 const pfpHeight_n = 1104;
@@ -11,21 +12,25 @@ const pfpOffset_up = 95; // upwards
 
 var pfpScale = 0.4;
 
-var profilePicHeight = pfpScale * pfpHeight_n;
-var profilePicWidth  = pfpScale * pfpWidth_n;
-
-
-
 export default function Home() {
+  let profilePicHeight = pfpScale * pfpHeight_n;
+  let profilePicWidth  = pfpScale * pfpWidth_n;
+
+  // Use JS to create responsive UI for small screens
+  const viewportDim = getWindowSize();
+  if (viewportDim.width < 750){
+    profilePicWidth = 0;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Gary Zhang:  physicist, linguist, graphic designer</title>
+        <title>Gary Zhang • physicist, linguist, graphic designer</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <header>
-        <div className={styles.headerDesign}>
+      
+      <div className={styles.headerDesign}>
+        <header>
           <div
             className={styles.headerTextWrapper}
             style={{width: `calc(100% - ${profilePicWidth}px - ${pfpOffset_lf}px)`}}
@@ -36,16 +41,14 @@ export default function Home() {
             </p>
           </div>
           <div
+            className={styles.profilePhotoWrapper}
             style={{
               height: profilePicHeight - pfpScale * pfpOffset_up,
-              width: profilePicWidth + pfpOffset_lf,
-              userSelect: "none",
-              position: "absolute",
-              bottom: 0,
-              right: 0
+              width: profilePicWidth + pfpOffset_lf
             }}
           >
-            <Image src="/profile.png"
+            <Image  
+              src="/profile.png"
               height={profilePicHeight}
               width={profilePicWidth}
               alt="Photograph of Gary Zhang"
@@ -53,33 +56,33 @@ export default function Home() {
               priority
             />
           </div>
-        </div>
-      </header>
-
-      <style jsx>{`
-        main {
-          padding: 5em 0;
-          justify-content: center;
-          align-items: center;
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-      `}</style>
-      {/* delete this later when you create the global.css file */}
-      <style jsx global>{`
-        html,
-        body {
-          font-size: 20pt;
-          font-weight: 300;
-          font-family: "Open Sans";
-          margin: 0 8px 0 8px;
-        }
-      `}</style>
+        </header>
+      </div>
     </div>
   )
+}
+
+
+function getWindowSize() {
+  // copied from StackOverflow user Darryl RN - CC BY-SA 4.0
+  // https://stackoverflow.com/questions/63406435/how-to-detect-window-size-in-next-js-ssr-using-react-hook
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+    
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  return windowSize;
 }
